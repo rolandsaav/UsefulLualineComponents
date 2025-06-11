@@ -43,3 +43,10 @@ return {
 }
 ```
 More documentation coming... maybe
+
+## Todo 
+- [ ] add screenshots
+- [ ] document configuration stuff 
+- [ ] make sure strings are stripped
+- [ ] type hints for lsp 
+- [ ] rename plugin lol
