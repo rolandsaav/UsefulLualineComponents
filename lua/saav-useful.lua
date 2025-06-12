@@ -2,13 +2,31 @@ local M = {}
 local markNames = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 local localMarkNames = markNames:lower()
 
+local macroCommandsDefined = false
+
+function ClearMacro(T)
+	local args = T.args
+
+	if T.nargs ~= 1 then
+		print("Only one macro can be cleared at once")
+		return
+	end
+
+	vim.fn.setreg(args, '')
+end
+
 function M.macros(config)
+	if not macroCommandsDefined then
+		vim.api.nvim_create_user_command("ClearMacro", ClearMacro, {})
+		macroCommandsDefined = true
+	end
+
 	local prefix = "Macros:"
 	if config["prefix"] then
 		prefix = config["prefix"]
 	end
 
-	local marks = localMarkNames
+	local marks = localMarkNames .. localMarkNames:lower()
 	if config["letters"] then
 		marks = config["letters"]
 	end
