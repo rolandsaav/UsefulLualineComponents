@@ -17,7 +17,7 @@ end
 
 function M.macros(config)
 	if not macroCommandsDefined then
-		vim.api.nvim_create_user_command("ClearMacro", ClearMacro, {})
+		vim.api.nvim_create_user_command("ClearMacro", ClearMacro, {nargs=1})
 		macroCommandsDefined = true
 	end
 
