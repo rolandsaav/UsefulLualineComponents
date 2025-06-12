@@ -7,8 +7,8 @@ local macroCommandsDefined = false
 function ClearMacro(T)
 	local args = T.args
 
-	if T.nargs ~= 1 then
-		print("Only one macro can be cleared at once")
+	if T.args == nil or #T.args ~= 1 then
+		print("Usage: :ClearMacro <register>")
 		return
 	end
 
@@ -36,19 +36,19 @@ function M.macros(config)
 		delimiter = config["delimiter"]
 	end
 
-	return function ()
+	return function()
 		local status = prefix
 
-		for i=1 , marks:len() do
-			local macro = marks:sub(i,i)
-			local contents = vim.fn.getreg(marks:sub(i,i))
+		for i = 1, marks:len() do
+			local macro = marks:sub(i, i)
+			local contents = vim.fn.getreg(marks:sub(i, i))
 			if contents == "" then
 				goto continue
 			end
 
 			status = status .. delimiter .. macro
 
-		    ::continue::
+			::continue::
 		end
 
 		return status
