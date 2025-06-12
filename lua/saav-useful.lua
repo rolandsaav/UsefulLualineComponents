@@ -2,6 +2,41 @@ local M = {}
 local markNames = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 local localMarkNames = markNames:lower()
 
+function M.macros(config)
+	local prefix = "Macros:"
+	if config["prefix"] then
+		prefix = config["prefix"]
+	end
+
+	local marks = localMarkNames
+	if config["letters"] then
+		marks = config["letters"]
+	end
+
+	local delimiter = " "
+	if config["delimiter"] then
+		delimiter = config["delimiter"]
+	end
+
+	return function ()
+		local status = prefix
+
+		for i=1 , marks:len() do
+			local macro = marks:sub(i,i)
+			local contents = vim.fn.getreg(marks:sub(i,i))
+			if contents == "" then
+				goto continue
+			end
+
+			status = status .. delimiter .. macro
+
+		    ::continue::
+		end
+
+		return status
+	end
+end
+
 function M.localMarks(config)
 	local prefix = "Lm:"
 	if config["prefix"] then
